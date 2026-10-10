@@ -102,7 +102,7 @@ document.querySelector('#projects').innerHTML = PROJECTS.map(p => `<article clas
   <div class="project-preview"><div class="preview-bar" aria-hidden="true"><span>● ● ●</span><span>${esc(p.name)}</span><span>↗</span></div><img src="${esc(p.image)}" alt="Captura da página de ${esc(p.name)}" loading="lazy" width="1440" height="980"></div>
   <p class="category">${esc(p.category)}</p><h3>${esc(p.name)}</h3><p>${esc(p.description)}</p>
   <div class="tags">${p.technologies.map(t=>`<span>${esc(t)}</span>`).join('')}</div>
-  <div class="project-actions"><button class="detail-button" data-project="${esc(p.id)}" aria-label="Ver detalhes de ${esc(p.name)}">Ver detalhes <span>↗</span></button>${external(p.repository,'GitHub')}</div>
+  <div class="project-actions"><button class="detail-button" data-project="${esc(p.id)}" aria-label="Ampliar projeto ${esc(p.name)}" aria-haspopup="dialog" aria-controls="project-dialog">Ampliar projeto <span aria-hidden="true">⤢</span></button>${external(p.repository,'GitHub')}</div>
 </article>`).join('');
 document.querySelector('#services').innerHTML=SERVICES.map(([icon,title,description])=>`<article class="service"><span class="service-icon" aria-hidden="true">${icon}</span><h3>${esc(title)}</h3><p>${esc(description)}</p><a href="#contato" data-service="${esc(title)}">Conversar sobre o projeto <span>↗</span></a></article>`).join('');
 document.querySelector('#technologies').innerHTML=TECHNOLOGIES.map(([title,items,note])=>`<article><h3>${esc(title)}</h3><p>${items.map(esc).join(' · ')}</p><small>${esc(note)}</small></article>`).join('');
@@ -112,28 +112,93 @@ menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')
 nav.addEventListener('click',e=>{if(e.target.closest('a'))closeMenu();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu.getAttribute('aria-expanded')==='true'){closeMenu();menu.focus();}});
 window.addEventListener('resize',()=>{if(window.innerWidth>700)closeMenu();});
-const dialog=document.querySelector('#project-dialog');
-document.querySelector('#projects').addEventListener('click', e => {
-  const button = e.target.closest('[data-project]');
-  if (!button) return;
-  const project = PROJECTS.find(p => p.id === button.dataset.project);
-  document.querySelector('#dialog-content').innerHTML = `
-    <p class="eyebrow">${esc(project.category)}</p><h2 id="project-title">${esc(project.name)}</h2>
-    <img src="${esc(project.image)}" alt="Captura da página de ${esc(project.name)}">
-    <h3>Contexto e objetivo</h3><p>${esc(project.description)}</p>
-    <h3>Problema que procura resolver</h3><p>${esc(project.problem)}</p>
-    <h3>Funcionalidades no projeto</h3><ul>${project.features.map(feature=>`<li>${esc(feature)}</li>`).join('')}</ul>
-    <h3>Tecnologias</h3><div class="tags">${project.technologies.map(tech=>`<span>${esc(tech)}</span>`).join('')}</div>
-    <h3>Implementação em foco</h3><p>${esc(project.implementation)}</p>
-    ${project.challenges?`<h3>Desafios técnicos</h3><p>${esc(project.challenges)}</p>`:''}
-    ${project.learnings?`<h3>Aprendizados</h3><p>${esc(project.learnings)}</p>`:''}
-    <div class="actions dialog-actions">${external(project.demo,'Visitar site')}${external(project.repository,'Código no GitHub')}</div>
-    <p class="fine">${esc(project.note)}</p>`;
-  dialog.setAttribute('aria-labelledby','project-title');
+// O mesmo botão abre a ampliação ao clicar em qualquer parte do cartão.
+const dialog = document.querySelector('#project-dialog');
+const projectViewer = document.querySelector('#dialog-content');
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+let projectOpener = null;
+let projectAnimation = null;
+let projectClosing = false;
+
+function openProject(project, trigger) {
+  if (dialog.open || projectClosing) return;
+  const source = trigger.closest('.project').querySelector('.project-preview').getBoundingClientRect();
+  projectOpener = trigger;
+  projectViewer.innerHTML = `
+    <div class="viewer-header">
+      <span class="viewer-caption"><span aria-hidden="true">⤢</span> VISUALIZAÇÃO DO PROJETO</span>
+      <button class="viewer-close" type="button" aria-label="Fechar projeto ampliado" autofocus><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="viewer-visual">
+      <figure class="viewer-capture">
+        <div class="preview-bar" aria-hidden="true"><span>● ● ●</span><span>${esc(project.name)}</span><span>⤢</span></div>
+        <img src="${esc(project.image)}" alt="Captura ampliada da página de ${esc(project.name)}" width="1440" height="980">
+      </figure>
+      <p class="viewer-note">${esc(project.note)}</p>
+    </div>
+    <div class="viewer-info">
+      <p class="eyebrow">${esc(project.category)}</p>
+      <h2 id="project-title">${esc(project.name)}</h2>
+      <p class="viewer-description">${esc(project.description)}</p>
+      <div class="tags viewer-tags" aria-label="Tecnologias utilizadas">${project.technologies.map(tech=>`<span>${esc(tech)}</span>`).join('')}</div>
+      <div class="viewer-detail"><h3>O objetivo</h3><p>${esc(project.problem)}</p></div>
+      <div class="viewer-detail"><h3>Funcionalidades</h3><ul>${project.features.map(feature=>`<li>${esc(feature)}</li>`).join('')}</ul></div>
+      <div class="viewer-detail"><h3>Por trás da interface</h3><p>${esc(project.implementation)}</p></div>
+      ${project.challenges?`<div class="viewer-detail"><h3>Desafios técnicos</h3><p>${esc(project.challenges)}</p></div>`:''}
+      ${project.learnings?`<div class="viewer-detail"><h3>Aprendizados</h3><p>${esc(project.learnings)}</p></div>`:''}
+      <div class="viewer-links">${external(project.demo,'Visitar site')}${external(project.repository,'Código no GitHub')}</div>
+      ${project.repository?'<p class="viewer-repository-note">Repositório privado · acesso mediante permissão.</p>':''}
+    </div>`;
   dialog.showModal();
+  document.documentElement.classList.add('project-open');
+  dialog.scrollTop = 0;
+  projectViewer.querySelector('.viewer-info').scrollTop = 0;
+  if (!reducedMotion.matches && typeof projectViewer.animate === 'function') {
+    const destination = projectViewer.getBoundingClientRect();
+    const deltaX = source.left + source.width / 2 - destination.left - destination.width / 2;
+    const deltaY = source.top + source.height / 2 - destination.top - destination.height / 2;
+    const scale = Math.max(0.2, Math.min(0.8, source.width / destination.width));
+    projectAnimation = projectViewer.animate([
+      {opacity: 0, transform: `translate(${deltaX}px, ${deltaY}px) scale(${scale})`},
+      {opacity: 1, transform: 'translate(0, 0) scale(1)'}
+    ], {duration: 420, easing: 'cubic-bezier(.22, 1, .36, 1)'});
+  }
+}
+
+async function closeProject() {
+  if (!dialog.open || projectClosing) return;
+  projectClosing = true;
+  projectAnimation?.cancel();
+  if (!reducedMotion.matches && typeof projectViewer.animate === 'function') {
+    projectAnimation = projectViewer.animate([
+      {opacity: 1, transform: 'scale(1)'},
+      {opacity: 0, transform: 'scale(.96)'}
+    ], {duration: 160, easing: 'ease-in', fill: 'forwards'});
+    await projectAnimation.finished.catch(() => {});
+  }
+  dialog.close();
+}
+
+document.querySelector('#projects').addEventListener('click', event => {
+  const trigger = event.target.closest('[data-project]');
+  if (!trigger) return;
+  const project = PROJECTS.find(project => project.id === trigger.dataset.project);
+  if (project) openProject(project, trigger);
 });
-document.querySelector('.close').addEventListener('click',()=>dialog.close());
-dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
+dialog.addEventListener('click', event => {
+  if (event.target.closest('.viewer-close') || event.target === dialog) closeProject();
+});
+dialog.addEventListener('cancel', event => {
+  event.preventDefault();
+  closeProject();
+});
+dialog.addEventListener('close', () => {
+  projectAnimation?.cancel();
+  projectAnimation = null;
+  projectClosing = false;
+  document.documentElement.classList.remove('project-open');
+  projectOpener?.focus({preventScroll: true});
+});
 const phoneValid=()=>/^\d{10,15}$/.test(CONFIG.whatsapp);
 const emailValid=()=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(CONFIG.email);
 function whatsappUrl(message){return `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message)}`;}
