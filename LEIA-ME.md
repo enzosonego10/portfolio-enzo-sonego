@@ -28,3 +28,6 @@ Edite CONFIG no início de `dist/script.js`: WhatsApp internacional apenas com n
 O formulário não armazena nem envia dados a um servidor. Com WhatsApp configurado, abre a mensagem preenchida para o visitante revisar e enviar. Envio por formulário exige um serviço externo de recebimento ou um back-end. PHP e bancos de dados precisam de hospedagem compatível: este portfólio é estático. Não há serviços de analytics nem fontes externas.
 
 A apresentação pessoal inclui idade e etapa escolar fornecidas em outubro de 2026. Atualize esses dados com o tempo.
+
+## Qualidade das capturas
+Capturas dos projetos renderizadas em 2×, com 2560 × 1760 pixels. Arquivos `*-hd.webp` preservam a captura sem nova compressão com perda; os cartões usam `*-preview.webp` menores para carregamento rápido. No projeto ampliado, use “Ver imagem em tela cheia” e os controles de zoom para ler os detalhes.

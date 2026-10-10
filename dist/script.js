@@ -16,7 +16,8 @@ const PROJECTS = [
     "problem": "Facilitar a consulta ao acervo e organizar o fluxo de reservas, retiradas e devoluções em uma biblioteca escolar.",
     "demo": "https://techub-biblioteca.vercel.app/",
     "repository": "https://github.com/enzosonego10/techub-biblioteca",
-    "image": "assets/techub.webp",
+    "image": "assets/techub-preview.webp",
+    "imageLarge": "assets/techub-hd.webp",
     "features": [
       "Catálogo com busca e filtros",
       "Login por perfil e validação institucional",
@@ -25,7 +26,7 @@ const PROJECTS = [
       "Painel administrativo para livros, usuários e empréstimos"
     ],
     "implementation": "A interface em JavaScript se comunica com uma API em PHP. O código reúne controle de sessão, autorização por perfil e organização dos dados relacionais.",
-    "note": "A captura mostra a tela de acesso da versão publicada. As áreas de aluno e administração exigem uma conta autorizada.",
+    "note": "A captura mostra a interface de acesso do projeto. As áreas de aluno e administração exigem uma conta autorizada.",
     "challenges": "",
     "learnings": "",
     "screenshots": []
@@ -43,7 +44,8 @@ const PROJECTS = [
     "problem": "Organizar conteúdo introdutório sobre quatro conflitos contemporâneos em uma experiência de leitura clara e navegável.",
     "demo": "",
     "repository": "https://github.com/enzosonego10/O-mundo-em-conflito",
-    "image": "assets/conflitos.webp",
+    "image": "assets/conflitos-preview.webp",
+    "imageLarge": "assets/conflitos-hd.webp",
     "features": [
       "Dossiês de quatro conflitos contemporâneos",
       "Seção de origens e atores centrais",
@@ -70,7 +72,8 @@ const PROJECTS = [
     "problem": "Reunir conteúdo histórico em uma interface organizada por temas, permitindo explorar diferentes categorias sem recarregar a página.",
     "demo": "",
     "repository": "https://github.com/enzosonego10/War-News-Web",
-    "image": "assets/war-news.webp",
+    "image": "assets/war-news-preview.webp",
+    "imageLarge": "assets/war-news-hd.webp",
     "features": [
       "Navegação entre categorias sem recarregar a página",
       "Seções de guerras, líderes, soldados e eventos",
@@ -99,7 +102,7 @@ const external = (url,label) => safeUrl(url)?`<a class="text-link" href="${esc(s
 document.querySelector('#availability').textContent=CONFIG.availability;
 document.querySelector('#year').textContent=new Date().getFullYear();
 document.querySelector('#projects').innerHTML = PROJECTS.map(p => `<article class="project">
-  <div class="project-preview"><div class="preview-bar" aria-hidden="true"><span>● ● ●</span><span>${esc(p.name)}</span><span>↗</span></div><img src="${esc(p.image)}" alt="Captura da página de ${esc(p.name)}" loading="lazy" width="1440" height="980"></div>
+  <div class="project-preview"><div class="preview-bar" aria-hidden="true"><span>● ● ●</span><span>${esc(p.name)}</span><span>↗</span></div><img src="${esc(p.image)}" alt="Captura da página de ${esc(p.name)}" loading="lazy" width="2560" height="1760"></div>
   <p class="category">${esc(p.category)}</p><h3>${esc(p.name)}</h3><p>${esc(p.description)}</p>
   <div class="tags">${p.technologies.map(t=>`<span>${esc(t)}</span>`).join('')}</div>
   <div class="project-actions"><button class="detail-button" data-project="${esc(p.id)}" aria-label="Ampliar projeto ${esc(p.name)}" aria-haspopup="dialog" aria-controls="project-dialog">Ampliar projeto <span aria-hidden="true">⤢</span></button>${external(p.repository,'GitHub')}</div>
@@ -132,8 +135,9 @@ function openProject(project, trigger) {
     <div class="viewer-visual">
       <figure class="viewer-capture">
         <div class="preview-bar" aria-hidden="true"><span>● ● ●</span><span>${esc(project.name)}</span><span>⤢</span></div>
-        <img src="${esc(project.image)}" alt="Captura ampliada da página de ${esc(project.name)}" width="1440" height="980">
+        <img src="${esc(project.imageLarge || project.image)}" alt="Captura em alta definição da página de ${esc(project.name)}" width="2560" height="1760">
       </figure>
+      <button class="viewer-image-open" type="button" data-image="${esc(project.id)}" aria-haspopup="dialog" aria-controls="image-dialog">⤢ Ver imagem em tela cheia</button>
       <p class="viewer-note">${esc(project.note)}</p>
     </div>
     <div class="viewer-info">
@@ -186,6 +190,12 @@ document.querySelector('#projects').addEventListener('click', event => {
   if (project) openProject(project, trigger);
 });
 dialog.addEventListener('click', event => {
+  const imageButton = event.target.closest('[data-image]');
+  if (imageButton) {
+    const project = PROJECTS.find(project => project.id === imageButton.dataset.image);
+    if (project) openProjectImage(project, imageButton);
+    return;
+  }
   if (event.target.closest('.viewer-close') || event.target === dialog) closeProject();
 });
 dialog.addEventListener('cancel', event => {
@@ -199,6 +209,41 @@ dialog.addEventListener('close', () => {
   document.documentElement.classList.remove('project-open');
   projectOpener?.focus({preventScroll: true});
 });
+// A captura em alta definição só é carregada quando o visitante abre o projeto.
+const imageDialog = document.querySelector('#image-dialog');
+const imageViewport = document.querySelector('#image-viewport');
+const imagePhoto = document.querySelector('#image-photo');
+const imageZoomLabel = document.querySelector('#image-zoom-label');
+const zoomOutButton = document.querySelector('#image-zoom-out');
+const zoomInButton = document.querySelector('#image-zoom-in');
+let imageZoom = 100;
+let imageTrigger = null;
+
+function updateImageZoom(value) {
+  imageZoom = Math.max(100, Math.min(400, value));
+  imagePhoto.style.width = `${imageZoom}%`;
+  imageZoomLabel.textContent = `${imageZoom}%`;
+  zoomOutButton.disabled = imageZoom <= 100;
+  zoomInButton.disabled = imageZoom >= 400;
+  if (imageZoom === 100) imageViewport.scrollTo({top: 0, left: 0, behavior: 'instant'});
+}
+
+function openProjectImage(project, trigger) {
+  imageTrigger = trigger;
+  imagePhoto.src = project.imageLarge || project.image;
+  imagePhoto.alt = `Captura em alta definição de ${project.name}`;
+  document.querySelector('#image-title').textContent = project.name;
+  updateImageZoom(100);
+  imageDialog.showModal();
+  imageViewport.scrollTop = 0;
+  imageViewport.scrollLeft = 0;
+}
+zoomOutButton.addEventListener('click', () => updateImageZoom(imageZoom - 25));
+zoomInButton.addEventListener('click', () => updateImageZoom(imageZoom + 25));
+document.querySelector('#image-zoom-reset').addEventListener('click', () => updateImageZoom(100));
+document.querySelector('#image-close').addEventListener('click', () => imageDialog.close());
+imageDialog.addEventListener('click', event => {if (event.target === imageDialog) imageDialog.close();});
+imageDialog.addEventListener('close', () => imageTrigger?.focus({preventScroll: true}));
 const phoneValid=()=>/^\d{10,15}$/.test(CONFIG.whatsapp);
 const emailValid=()=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(CONFIG.email);
 function whatsappUrl(message){return `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message)}`;}
