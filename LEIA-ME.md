@@ -1,4 +1,4 @@
-# Portfólio Sonego
+# Portfólio Enzo Sonego
 
 ## Estrutura
 ```
@@ -6,7 +6,7 @@ dist/
   index.html
   style.css
   script.js
-  assets/ (favicon e três conceitos ilustrativos em SVG)
+  assets/ (favicon e três capturas reais em WebP)
   robots.txt
   sitemap.xml
 ```
@@ -14,7 +14,7 @@ dist/
 Abra `dist/index.html` no navegador, ou use um servidor estático. Não há dependências de produção nem frameworks.
 
 ## Personalizar
-Edite CONFIG no início de `dist/script.js`: WhatsApp internacional apenas com números, e-mail, GitHub, LinkedIn e disponibilidade. Contatos vazios não geram links. Edite PROJECTS para confirmar categorias, funcionalidades reais, desafios, aprendizados, tecnologias, links e capturas. As imagens SVG são conceitos ilustrativos, não capturas de projetos existentes. Edite SERVICES para remover serviços que você ainda não entrega e TECHNOLOGIES para atualizar sua lista. Depoimentos ficam ocultos enquanto CONFIG.testimonials está vazio. A marca e apresentação estão no HTML. Você pode trocar o monograma por sua foto.
+Edite CONFIG no início de `dist/script.js`: WhatsApp internacional apenas com números, e-mail, GitHub, LinkedIn e disponibilidade. WhatsApp, e-mail e GitHub já estão configurados. Contatos vazios não geram links. Edite PROJECTS para confirmar categorias, funcionalidades reais, desafios, aprendizados, tecnologias, links e capturas. As imagens WebP são capturas reais: TecHUB publicado, O Mundo em Conflito e War News Web nas versões locais fornecidas. As descrições se baseiam nos arquivos desses projetos. Os links GitHub foram fornecidos pelo proprietário, que confirmou serem repositórios privados; o acesso exige permissão. Edite SERVICES para remover serviços que você ainda não entrega e TECHNOLOGIES para atualizar sua lista. Depoimentos ficam ocultos enquanto CONFIG.testimonials está vazio. A marca e apresentação estão no HTML. Você pode trocar o monograma por sua foto.
 
 ## Publicação gratuita
 1. Mantenha os arquivos e `assets/` juntos, sem renomear referências.
@@ -26,3 +26,5 @@ Edite CONFIG no início de `dist/script.js`: WhatsApp internacional apenas com n
 7. Para domínio próprio, cadastre-o nas configurações da hospedagem e siga os registros DNS informados pelo provedor. Atualize og:url, sitemap.xml e a referência Sitemap no robots.txt usando esse domínio.
 
 O formulário não armazena nem envia dados a um servidor. Com WhatsApp configurado, abre a mensagem preenchida para o visitante revisar e enviar. Envio por formulário exige um serviço externo de recebimento ou um back-end. PHP e bancos de dados precisam de hospedagem compatível: este portfólio é estático. Não há serviços de analytics nem fontes externas.
+
+A apresentação pessoal inclui idade e etapa escolar fornecidas em outubro de 2026. Atualize esses dados com o tempo.
