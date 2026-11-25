@@ -1,6 +1,6 @@
 // Edite os contatos e dados aqui. Não inclua +, espaços ou símbolos no WhatsApp.
 const CONFIG = {name: 'Enzo Sonego', availability: 'Disponível para novos projetos', whatsapp: '5514996920447', email: 'enzosonego106@gmail.com', github: 'https://github.com/enzosonego10', linkedin: '', testimonials: []};
-const PROJECTS = [
+const ARCHIVED_PROJECTS = [
   {
     "id": "techub",
     "name": "TecHUB Biblioteca",
@@ -88,6 +88,71 @@ const PROJECTS = [
     "screenshots": []
   }
 ];
+const PROJECTS = [
+  {
+    id: 'point-pet', name: 'Point Pet', category: 'PROJETO WEB · MAPA COLABORATIVO',
+    description: 'Mapa colaborativo de locais para pets.', technologies: ['HTML'],
+    problem: 'Reunir locais voltados a pets em um mapa colaborativo.',
+    demo: 'https://point-pet-map.vercel.app/', repository: 'https://github.com/enzosonego10/point-pet', publicRepository: true,
+    image: 'assets/point-pet-preview.webp', imageLarge: 'assets/point-pet-hd.webp', fit: 'contain', features: ['Mapa colaborativo de locais para pets', 'Repositório público no GitHub'],
+    implementation: 'O repositório público identifica o projeto como uma aplicação em HTML. Os detalhes de implementação podem ser consultados diretamente no código.',
+    note: 'Captura do mapa colaborativo em funcionamento.', challenges: '', learnings: '', screenshots: []
+  },
+  {
+    id: 'manutencao-escola-agricola', name: 'Manutenção da Escola Agrícola', category: 'SISTEMA WEB · PROJETO ESCOLAR',
+    description: 'Sistema para manutenção de instalações, espaços e equipamentos da escola.', technologies: ['PHP'],
+    problem: 'Permitir que alunos registrem e acompanhem pedidos enquanto a equipe administrativa organiza a execução.',
+    demo: '', repository: 'https://github.com/enzosonego10/manutencao-da-escola-agricola', publicRepository: true,
+    image: 'assets/manutencao-escola-preview.webp', imageLarge: 'assets/manutencao-escola-hd.webp', fit: 'contain', features: ['Registro e acompanhamento de pedidos', 'Organização da execução pela equipe administrativa', 'Repositório público no GitHub'],
+    implementation: 'O repositório público identifica o projeto como uma aplicação em PHP. Os detalhes de implementação podem ser consultados diretamente no código.',
+    note: 'Captura da visão administrativa do painel de manutenção.', challenges: '', learnings: '', screenshots: []
+  },
+  {
+    id: 'orgalume', name: 'OrgaLume', category: 'PAINEL PESSOAL · ORGANIZAÇÃO',
+    description: 'Seu dia, mais organizado: painel pessoal com tarefas, agenda, projetos e notas.', technologies: ['HTML'],
+    problem: 'Reunir em um só painel tarefas, agenda, projetos e notas pessoais.',
+    demo: 'https://orgalume.vercel.app/', repository: 'https://github.com/enzosonego10/orgalume', publicRepository: true,
+    image: 'assets/orgalume-preview.webp', imageLarge: 'assets/orgalume-hd.webp', fit: 'contain', features: ['Tarefas', 'Agenda', 'Projetos', 'Notas', 'Repositório público no GitHub'],
+    implementation: 'O repositório público identifica o projeto como uma aplicação em HTML. Os detalhes de implementação podem ser consultados diretamente no código.',
+    note: 'Captura do painel pessoal em funcionamento.', challenges: '', learnings: '', screenshots: []
+  },
+  {
+    id: 'caderno-retirante-jogo', name: 'Caderno de Retirante', category: 'JOGO DIDÁTICO · PROJETO PRIVADO',
+    description: 'Jogo didático de navegador inspirado em Vidas Secas, sobre seca, escolhas e migração forçada.', technologies: ['JavaScript'],
+    problem: 'Criar uma experiência didática de navegador sobre seca, escolhas e migração forçada.',
+    demo: '', repository: 'https://github.com/enzosonego10/caderno-de-retirante', publicRepository: false,
+    image: 'assets/caderno-retirante-preview.webp', imageLarge: 'assets/caderno-retirante-hd.webp', fit: 'contain', features: ['Jogo didático de navegador', 'Tema inspirado em Vidas Secas', 'Repositório privado'],
+    implementation: 'O repositório identifica o projeto como uma aplicação em JavaScript.',
+    note: 'Captura da introdução do jogo didático. O repositório é privado.', challenges: '', learnings: '', screenshots: []
+  },
+  {
+    id: 'war-news', name: 'War News Web', category: 'SITE EDUCATIVO · PROJETO PRIVADO',
+    description: 'Site educativo sobre conflitos históricos e atuais, com descrições detalhadas de guerras e soldados.', technologies: ['JavaScript'],
+    problem: 'Apresentar conflitos e seus protagonistas em uma experiência educativa de navegação simples.',
+    demo: '', repository: 'https://github.com/enzosonego10/War-News-Web', publicRepository: false,
+    image: 'assets/war-news-preview.webp', imageLarge: 'assets/war-news-hd.webp', features: ['Conteúdo sobre guerras e soldados', 'Projeto educativo', 'Repositório privado'],
+    implementation: 'O repositório identifica o projeto como uma aplicação em JavaScript.',
+    note: 'Captura local disponível. O repositório é privado.', challenges: '', learnings: '', screenshots: []
+  },
+  {
+    id: 'mundo-conflito', name: 'O Mundo em Conflito', category: 'SITE EDUCATIVO · PROJETO PRIVADO',
+    description: 'Trabalho escolar que apresenta conflitos modernos de forma simples e direta.', technologies: ['HTML'],
+    problem: 'Organizar conteúdo introdutório sobre conflitos modernos para uso escolar.',
+    demo: '', repository: 'https://github.com/enzosonego10/O-mundo-em-conflito', publicRepository: false,
+    image: 'assets/conflitos-preview.webp', imageLarge: 'assets/conflitos-hd.webp', features: ['Conteúdo educativo sobre conflitos modernos', 'Projeto escolar', 'Repositório privado'],
+    implementation: 'O repositório identifica o projeto como uma aplicação em HTML.',
+    note: 'Captura local disponível. O repositório é privado.', challenges: '', learnings: '', screenshots: []
+  },
+  {
+    id: 'techub', name: 'TecHUB Biblioteca', category: 'SISTEMA WEB · PROJETO PRIVADO',
+    description: 'Sistema para a biblioteca da escola.', technologies: ['PHP'],
+    problem: 'Apoiar as atividades da biblioteca escolar em um sistema web.',
+    demo: 'https://techub-biblioteca.vercel.app/', repository: 'https://github.com/enzosonego10/techub-biblioteca', publicRepository: false,
+    image: 'assets/techub-preview.webp', imageLarge: 'assets/techub-hd.webp', features: ['Sistema web para biblioteca escolar', 'Repositório privado'],
+    implementation: 'O repositório identifica o projeto como uma aplicação em PHP.',
+    note: 'Captura local disponível. O repositório é privado.', challenges: '', learnings: '', screenshots: []
+  }
+];
 const SERVICES = [
  ['⌘','Sites institucionais','Uma presença digital para apresentar sua empresa, seus serviços e suas formas de contato.'],
  ['↗','Landing pages','Uma página focada na sua oferta, com conteúdo claro e um caminho para a próxima ação.'],
@@ -99,10 +164,13 @@ const TECHNOLOGIES = [['Front-end',['HTML5','CSS3','JavaScript'],'Estrutura, est
 const esc = value => String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeUrl = value => {try {const url=new URL(value);return ['https:','http:'].includes(url.protocol)?url.href:'';}catch{return '';}};
 const external = (url,label) => safeUrl(url)?`<a class="text-link" href="${esc(safeUrl(url))}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>`:'';
+const projectVisual = (project, large = false) => project.image
+  ? `<img class="${project.fit === 'contain' ? 'project-image-contain' : ''}" src="${esc(large ? (project.imageLarge || project.image) : project.image)}" alt="Captura${large ? ' em alta definição' : ''} da página de ${esc(project.name)}" loading="lazy" width="2560" height="1760">`
+  : `<div class="project-placeholder${large ? ' viewer-placeholder' : ''}" role="img" aria-label="Projeto ${esc(project.name)} sem captura local"><span>PORTFÓLIO</span><strong>${esc(project.name)}</strong><small>CAPTURA A CONFIRMAR</small></div>`;
 document.querySelector('#availability').textContent=CONFIG.availability;
 document.querySelector('#year').textContent=new Date().getFullYear();
 document.querySelector('#projects').innerHTML = PROJECTS.map(p => `<article class="project">
-  <div class="project-preview"><div class="preview-bar" aria-hidden="true"><span>● ● ●</span><span>${esc(p.name)}</span><span>↗</span></div><img src="${esc(p.image)}" alt="Captura da página de ${esc(p.name)}" loading="lazy" width="2560" height="1760"></div>
+  <div class="project-preview"><div class="preview-bar" aria-hidden="true"><span>● ● ●</span><span>${esc(p.name)}</span><span>↗</span></div>${projectVisual(p)}</div>
   <p class="category">${esc(p.category)}</p><h3>${esc(p.name)}</h3><p>${esc(p.description)}</p>
   <div class="tags">${p.technologies.map(t=>`<span>${esc(t)}</span>`).join('')}</div>
   <div class="project-actions"><button class="detail-button" data-project="${esc(p.id)}" aria-label="Ampliar projeto ${esc(p.name)}" aria-haspopup="dialog" aria-controls="project-dialog">Ampliar projeto <span aria-hidden="true">⤢</span></button>${external(p.repository,'GitHub')}</div>
@@ -135,9 +203,9 @@ function openProject(project, trigger) {
     <div class="viewer-visual">
       <figure class="viewer-capture">
         <div class="preview-bar" aria-hidden="true"><span>● ● ●</span><span>${esc(project.name)}</span><span>⤢</span></div>
-        <img src="${esc(project.imageLarge || project.image)}" alt="Captura em alta definição da página de ${esc(project.name)}" width="2560" height="1760">
+        ${projectVisual(project, true)}
       </figure>
-      <button class="viewer-image-open" type="button" data-image="${esc(project.id)}" aria-haspopup="dialog" aria-controls="image-dialog">⤢ Ver imagem em tela cheia</button>
+      ${project.image ? `<button class="viewer-image-open" type="button" data-image="${esc(project.id)}" aria-haspopup="dialog" aria-controls="image-dialog">⤢ Ver imagem em tela cheia</button>` : ''}
       <p class="viewer-note">${esc(project.note)}</p>
     </div>
     <div class="viewer-info">
@@ -151,7 +219,7 @@ function openProject(project, trigger) {
       ${project.challenges?`<div class="viewer-detail"><h3>Desafios técnicos</h3><p>${esc(project.challenges)}</p></div>`:''}
       ${project.learnings?`<div class="viewer-detail"><h3>Aprendizados</h3><p>${esc(project.learnings)}</p></div>`:''}
       <div class="viewer-links">${external(project.demo,'Visitar site')}${external(project.repository,'Código no GitHub')}</div>
-      ${project.repository?'<p class="viewer-repository-note">Repositório privado · acesso mediante permissão.</p>':''}
+      ${project.repository && !project.publicRepository?'<p class="viewer-repository-note">Repositório privado · acesso mediante permissão.</p>':''}
     </div>`;
   dialog.showModal();
   document.documentElement.classList.add('project-open');
